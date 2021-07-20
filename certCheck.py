@@ -1,5 +1,6 @@
 from urllib.request import ssl, socket
 import json
+from win10toast import ToastNotifier
 
 i = "i"
 
@@ -38,7 +39,9 @@ def getExpiry(addresses):
     # Return the list (duh)
     return expiryList
 
+toaster = ToastNotifier()
+
 # Print out the results
 expiries = getExpiry(urls)
 for e in expiries:
-    print(e)
+    toaster.show_toast("CertCheker notification", e)
