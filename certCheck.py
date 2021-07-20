@@ -1,13 +1,21 @@
 from urllib.request import ssl, socket
 import json
 
-# List of URLs to test with
-Addresses = ["www.google.com", "meme.tiktok.uganda", "tk.almpartners.fi", "www.tavastiasoft.fi"]
+i = "i"
 
+# List of URLs
+urls = []
+print("Press <ENTER> when you have entered the last URL")
+while i != "":
+    i = input("Insert URL you want to follow: ")
+    if i != "":
+        urls.append(i)
+    else:
+        i =""
 
-def getExpiry(URLS):
+def getExpiry(addresses):
     expiryList = []
-    for url in URLS:
+    for url in addresses:
         base_url = url
         port = '443'
 
@@ -31,6 +39,6 @@ def getExpiry(URLS):
     return expiryList
 
 # Print out the results
-expiries = getExpiry(Addresses)
+expiries = getExpiry(urls)
 for e in expiries:
     print(e)
