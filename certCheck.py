@@ -7,7 +7,7 @@ i = "i"
 urls = []
 print("Press <ENTER> when you have entered the last URL")
 while i != "":
-    i = input("Insert URL you want to follow: ")
+    i = input("Insert URL you want to check: ")
     if i != "":
         urls.append(i)
     else:
