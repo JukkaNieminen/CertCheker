@@ -1,4 +1,3 @@
-import functools
 from urllib.request import ssl, socket
 import json
 from win10toast import ToastNotifier
