@@ -1,18 +1,21 @@
+import functools
 from urllib.request import ssl, socket
 import json
 from win10toast import ToastNotifier
 
-i = "i"
+msg ="I fetched this information about the domains listed in C:\\Temp\\CertCheker\\url.txt"
+contentList = []
+toaster = ToastNotifier()
 
-# List of URLs
-urls = []
-print("Press <ENTER> when you have entered the last URL")
-while i != "":
-    i = input("Insert URL you want to check: ")
-    if i != "":
-        urls.append(i)
-    else:
-        i =""
+
+# Read list of urls from file in ProgramFiles, separated by commas (,)
+urlFile = open("C:\\Temp\\CertCheker\\url.txt","r")
+content = urlFile.readlines()
+urlFile.close()
+
+for item in content:
+    item = item.strip('\n')
+    contentList.append(item)
 
 def getExpiry(addresses):
     expiryList = []
@@ -39,9 +42,15 @@ def getExpiry(addresses):
     # Return the list (duh)
     return expiryList
 
-toaster = ToastNotifier()
-
 # Print out the results
-expiries = getExpiry(urls)
+expiries = getExpiry(contentList)
 for e in expiries:
-    toaster.show_toast("CertCheker notification", e)
+    msg = msg + e + "\n"
+
+try:
+    reportFile = open("C:\\Temp\\CertCheker\\CertReport.txt","w")
+    reportFile.write(msg)
+    reportFile.close()
+    toaster.show_toast("CertCheker notification", "New certificate report is ready for reading @\nC:\Temp\CertReport.txt")
+except:
+    toaster.show_toast("CertCheker notification", "There was a problem in creating the certtificate report.")
